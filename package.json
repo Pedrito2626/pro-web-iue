@@ -1,0 +1,23 @@
+{
+  "name": "licorera-app",
+  "version": "1.0.0",
+  "description": "Sistema de gestión para licorera",
+  "main": "app.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "serve": "http-server . -p 3000"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "http-server": "^14.1.1"
+  },
+  "keywords": ["licorera", "gestion", "ventas", "productos"],
+  "author": "Tu Nombre",
+  "license": "MIT"
+}

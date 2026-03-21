@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Licorera - Gestión</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <header>
+        <h1>Licorera</h1>
+        <p class="subtitle">Sistema de gestión de productos, ventas y clientes</p>
+    </header>
+
+    <section class="tabs-navigation">
+        <button class="tab-btn active" data-tab="productos">Productos</button>
+        <button class="tab-btn" data-tab="ventas">Ventas</button>
+        <button class="tab-btn" data-tab="clientes">Clientes</button>
+    </section>
+
+    <main>
+        <div id="notification" class="notification" style="display: none;"></div>
+
+        <section id="productos" class="tab-content active">
+            <div class="section-header">
+                <h2>Gestión de Productos</h2>
+            </div>
+            <div class="content-wrapper">
+                <div class="form-section">
+                    <h3 id="formTitle">Agregar Nuevo Producto</h3>
+                    <form id="productForm" class="form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productName">Nombre</label>
+                                <input type="text" id="productName" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="productPrice">Precio</label>
+                                <input type="number" id="productPrice" step="0.01" min="0" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="productQuantity">Cantidad</label>
+                                <input type="number" id="productQuantity" min="0" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="productCategory">Categoría</label>
+                                <input type="text" id="productCategory" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDescription">Descripción</label>
+                            <textarea id="productDescription"></textarea>
+                        </div>
+                        <div class="form-row" style="justify-content: flex-start; align-items: center; gap: 0.75rem;">
+                            <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                            <button type="button" id="cancelEditBtn" class="btn btn-secondary" style="display:none;">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="products-section">
+                    <div class="search-section">
+                        <input id="searchInput" class="search-input" type="text" placeholder="Buscar producto..." />
+                        <button id="clearSearchBtn" class="btn">Limpiar</button>
+                    </div>
+                    <div id="productsList"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ventas" class="tab-content">
+            <div class="section-header">
+                <h2>Registrar Venta</h2>
+            </div>
+            <div class="form-section">
+                <form id="saleForm" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="saleProductId">Producto</label>
+                            <select id="saleProductId"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="saleQuantity">Cantidad</label>
+                            <input id="saleQuantity" type="number" min="1" value="1" required />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="saleClientId">ID Cliente</label>
+                            <input id="saleClientId" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label for="saleClientName">Nombre Cliente</label>
+                            <input id="saleClientName" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <label for="saleClientPhone">Teléfono Cliente</label>
+                            <input id="saleClientPhone" type="tel" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="saleClientEmail">Email Cliente</label>
+                            <input id="saleClientEmail" type="email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="saleAmount">Total Venta</label>
+                            <input id="saleAmount" type="text" readonly />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <button type="submit" class="btn btn-success">Registrar Venta</button>
+                        <button type="button" id="newSaleBtn" class="btn btn-secondary">Nueva Venta</button>
+                    </div>
+                </form>
+                <div id="saleResultSection" style="display:none; margin-top:1rem;">
+                    <h4>Resultado de la venta</h4>
+                    <div id="saleResult"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="clientes" class="tab-content">
+            <div class="section-header">
+                <h2>Clientes</h2>
+            </div>
+            <div class="form-section">
+                <form id="clientForm" class="form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientName">Nombre</label>
+                            <input id="clientName" type="text" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="clientPhone">Teléfono</label>
+                            <input id="clientPhone" type="tel" required />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="clientEmail">Email</label>
+                            <input id="clientEmail" type="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="clientAddress">Dirección</label>
+                            <input id="clientAddress" type="text" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <button type="submit" class="btn btn-primary">Registrar Cliente</button>
+                        <button type="button" id="newClientBtn" class="btn btn-secondary">Nuevo Cliente</button>
+                    </div>
+                </form>
+                <div class="search-section">
+                    <input id="clientSearchId" class="search-input" type="text" placeholder="Buscar cliente por ID" />
+                    <button id="searchClientBtn" class="btn">Buscar</button>
+                </div>
+                <div id="clientSearchResult" style="display:none;"> 
+                    <h4>Cliente encontrado</h4>
+                    <div id="clientInfo"></div>
+                </div>
+                <div id="clientResultSection" style="display:none; margin-top:1rem;">
+                    <h4>Cliente registrado</h4>
+                    <div id="clientResult"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
