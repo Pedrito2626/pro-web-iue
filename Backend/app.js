@@ -295,19 +295,23 @@ async function handleSaleFormSubmit(e) {
     e.preventDefault();
     const productId = elements.saleProductId.value;
     const quantity = parseInt(elements.saleQuantity.value);
-    const clientId = elements.saleClientId.value;
-    const clientName = elements.saleClientName.value;
-    const clientPhone = elements.saleClientPhone.value;
-    const clientEmail = elements.saleClientEmail.value;
+    let clientId = elements.saleClientId.value.trim();
+    const clientName = elements.saleClientName.value.trim();
+    const clientPhone = elements.saleClientPhone.value.trim();
+    const clientEmail = elements.saleClientEmail.value.trim();
+
     if (!productId || quantity <= 0) {
         showNotification('Selecciona un producto y cantidad válida', 'error');
         return;
     }
-    const saleData = { productoId: productId, cantidad: quantity };
-    if (clientId) {
-        saleData.clienteId = clientId;
+
+    if (clientId && (!validatePhone(clientPhone) || !validateEmail(clientEmail))) {
+        showNotification('Si se provee ID de cliente, también debe tener datos de contacto válidos', 'error');
+        return;
     }
-    if (clientName && clientPhone && clientEmail) {
+
+    // Crear cliente nuevo cuando no hay ID y se proveen datos completos
+    if (!clientId && clientName && clientPhone && clientEmail) {
         if (!validateEmail(clientEmail)) {
             showNotification('Email inválido', 'error');
             return;
@@ -316,17 +320,34 @@ async function handleSaleFormSubmit(e) {
             showNotification('Teléfono inválido', 'error');
             return;
         }
-        saleData.cliente = {
+
+        const clientResponse = await createClient({
             nombre: clientName,
             telefono: clientPhone,
-            email: clientEmail,
-        };
+            email: clientEmail
+        });
+
+        if (!clientResponse.success) {
+            showNotification(`Error al registrar cliente en venta: ${clientResponse.error}`, 'error');
+            return;
+        }
+
+        clientId = clientResponse.data.id || clientResponse.data._id;
+        showNotification('Cliente registrado correctamente como parte de la venta', 'success');
+        elements.saleClientId.value = clientId;
     }
+
+    const saleData = { productoId: productId, cantidad: quantity };
+    if (clientId) {
+        saleData.clienteId = clientId;
+    }
+
     const response = await createSale(saleData);
     if (!response.success) {
         showNotification(`Error al registrar venta: ${response.error}`, 'error');
         return;
     }
+
     showNotification('Venta registrada correctamente', 'success');
     elements.saleForm.style.display = 'none';
     elements.saleResultSection.style.display = 'block';

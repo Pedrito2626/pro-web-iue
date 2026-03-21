@@ -15,6 +15,9 @@ const mockData = {
     products: [
         { id: '1', nombre: 'Whisky Johnnie Walker Red Label', precio: 45.99, cantidad: 25, categoria: 'Whisky', descripcion: 'Whisky escocés clásico, suave y accesible' },
         { id: '2', nombre: 'Vodka Absolut', precio: 29.99, cantidad: 40, categoria: 'Vodka', descripcion: 'Vodka sueco premium, puro y cristalino' },
+        { id: '9', nombre: 'Licor de Café Kahlúa', precio: 34.50, cantidad: 22, categoria: 'Licor', descripcion: 'Sabor intenso a café y vainilla, ideal para cócteles y postres' },
+        { id: '10', nombre: 'Coñac Hennessy VS', precio: 99.99, cantidad: 12, categoria: 'Coñac', descripcion: 'Coñac francés fino con notas de frutas secas y roble' },
+        { id: '11', nombre: 'Cerveza artesanal IPA', precio: 6.99, cantidad: 72, categoria: 'Cerveza', descripcion: 'IPA con lúpulo cítrico y amargor balanceado' },
         { id: '3', nombre: 'Ron Bacardi Superior', precio: 24.99, cantidad: 30, categoria: 'Ron', descripcion: 'Ron blanco cubano, versátil para cócteles' },
         { id: '4', nombre: 'Tequila Jose Cuervo Especial', precio: 39.99, cantidad: 20, categoria: 'Tequila', descripcion: 'Tequila 100% de agave, perfecto para margaritas' },
         { id: '5', nombre: 'Gin Tanqueray London Dry', precio: 34.99, cantidad: 15, categoria: 'Gin', descripcion: 'Gin inglés premium con notas cítricas' },
