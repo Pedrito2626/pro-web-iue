@@ -21,6 +21,7 @@
     <main>
         <div id="notification" class="notification" style="display: none;"></div>
 
+        <!-- ==================== TAB PRODUCTOS ==================== -->
         <section id="productos" class="tab-content active">
             <div class="section-header">
                 <h2>Gestión de Productos</h2>
@@ -28,30 +29,73 @@
             <div class="content-wrapper">
                 <div class="form-section">
                     <h3 id="formTitle">Agregar Nuevo Producto</h3>
-                    <form id="productForm" class="form">
+                    <form id="productForm" class="form" novalidate>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="productName">Nombre</label>
-                                <input type="text" id="productName" required />
+                                <label for="productName">Nombre <span class="campo-requerido">*</span></label>
+                                <input
+                                    type="text"
+                                    id="productName"
+                                    name="nombre"
+                                    required
+                                    minlength="2"
+                                    maxlength="100"
+                                    placeholder="Ej: Whisky Johnnie Walker"
+                                    autocomplete="off"
+                                />
+                                <span class="mensaje-error">El nombre debe tener entre 2 y 100 caracteres</span>
                             </div>
                             <div class="form-group">
-                                <label for="productPrice">Precio</label>
-                                <input type="number" id="productPrice" step="0.01" min="0" required />
+                                <label for="productPrice">Precio (USD) <span class="campo-requerido">*</span></label>
+                                <input
+                                    type="number"
+                                    id="productPrice"
+                                    name="precio"
+                                    step="0.01"
+                                    min="0.01"
+                                    required
+                                    placeholder="Ej: 45.99"
+                                />
+                                <span class="mensaje-error">El precio debe ser mayor a cero</span>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="productQuantity">Cantidad</label>
-                                <input type="number" id="productQuantity" min="0" required />
+                                <label for="productQuantity">Cantidad <span class="campo-requerido">*</span></label>
+                                <input
+                                    type="number"
+                                    id="productQuantity"
+                                    name="cantidad"
+                                    min="0"
+                                    required
+                                    placeholder="Ej: 25"
+                                />
+                                <span class="mensaje-error">La cantidad no puede ser negativa</span>
                             </div>
                             <div class="form-group">
-                                <label for="productCategory">Categoría</label>
-                                <input type="text" id="productCategory" />
+                                <label for="productCategory">Categoría <span class="campo-requerido">*</span></label>
+                                <input
+                                    type="text"
+                                    id="productCategory"
+                                    name="categoria"
+                                    required
+                                    minlength="2"
+                                    maxlength="50"
+                                    placeholder="Ej: Whisky, Ron, Vino"
+                                    autocomplete="off"
+                                />
+                                <span class="mensaje-error">La categoría debe tener entre 2 y 50 caracteres</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="productDescription">Descripción</label>
-                            <textarea id="productDescription"></textarea>
+                            <textarea
+                                id="productDescription"
+                                name="descripcion"
+                                maxlength="300"
+                                placeholder="Descripción opcional del producto..."
+                            ></textarea>
+                            <span class="mensaje-error">La descripción no puede superar los 300 caracteres</span>
                         </div>
                         <div class="form-row" style="justify-content: flex-start; align-items: center; gap: 0.75rem;">
                             <button type="submit" class="btn btn-primary">Guardar Producto</button>
@@ -69,44 +113,86 @@
             </div>
         </section>
 
+        <!-- ==================== TAB VENTAS ==================== -->
         <section id="ventas" class="tab-content">
             <div class="section-header">
                 <h2>Registrar Venta</h2>
             </div>
             <div class="form-section">
-                <form id="saleForm" class="form">
+                <form id="saleForm" class="form" novalidate>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="saleProductId">Producto</label>
-                            <select id="saleProductId"></select>
+                            <label for="saleProductId">Producto <span class="campo-requerido">*</span></label>
+                            <select id="saleProductId" name="productoId" required>
+                                <option value="">Seleccionar producto...</option>
+                            </select>
+                            <span class="mensaje-error">Debe seleccionar un producto</span>
                         </div>
                         <div class="form-group">
-                            <label for="saleQuantity">Cantidad</label>
-                            <input id="saleQuantity" type="number" min="1" value="1" required />
+                            <label for="saleQuantity">Cantidad <span class="campo-requerido">*</span></label>
+                            <input
+                                id="saleQuantity"
+                                type="number"
+                                name="cantidad"
+                                min="1"
+                                value="1"
+                                required
+                                placeholder="Ej: 2"
+                            />
+                            <span class="mensaje-error">La cantidad debe ser mínimo 1</span>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="saleClientId">ID Cliente</label>
-                            <input id="saleClientId" type="text" />
+                            <label for="saleClientId">ID Cliente <span class="campo-opcional">(opcional)</span></label>
+                            <input
+                                id="saleClientId"
+                                type="text"
+                                name="clienteId"
+                                placeholder="Ej: 1"
+                                pattern="[0-9]+"
+                            />
+                            <span class="mensaje-error">El ID de cliente debe ser un número</span>
                         </div>
                         <div class="form-group">
-                            <label for="saleClientName">Nombre Cliente</label>
-                            <input id="saleClientName" type="text" />
+                            <label for="saleClientName">Nombre Cliente <span class="campo-opcional">(nuevo cliente)</span></label>
+                            <input
+                                id="saleClientName"
+                                type="text"
+                                name="nombreCliente"
+                                minlength="2"
+                                maxlength="100"
+                                placeholder="Ej: Juan Pérez"
+                            />
+                            <span class="mensaje-error">El nombre debe tener al menos 2 caracteres</span>
                         </div>
                         <div class="form-group">
                             <label for="saleClientPhone">Teléfono Cliente</label>
-                            <input id="saleClientPhone" type="tel" />
+                            <input
+                                id="saleClientPhone"
+                                type="tel"
+                                name="telefonoCliente"
+                                pattern="[\d\s\-\+\(\)]{7,15}"
+                                placeholder="Ej: +573001234567"
+                            />
+                            <span class="mensaje-error">Ingrese un teléfono válido (mínimo 7 dígitos)</span>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="saleClientEmail">Email Cliente</label>
-                            <input id="saleClientEmail" type="email" />
+                            <input
+                                id="saleClientEmail"
+                                type="email"
+                                name="emailCliente"
+                                placeholder="Ej: cliente@email.com"
+                                autocomplete="email"
+                            />
+                            <span class="mensaje-error">Ingrese un correo electrónico válido</span>
                         </div>
                         <div class="form-group">
                             <label for="saleAmount">Total Venta</label>
-                            <input id="saleAmount" type="text" readonly />
+                            <input id="saleAmount" type="text" readonly placeholder="Se calcula automáticamente" />
                         </div>
                     </div>
                     <div class="form-row">
@@ -121,30 +207,67 @@
             </div>
         </section>
 
+        <!-- ==================== TAB CLIENTES ==================== -->
         <section id="clientes" class="tab-content">
             <div class="section-header">
                 <h2>Clientes</h2>
             </div>
             <div class="form-section">
-                <form id="clientForm" class="form">
+                <h3>Registrar Nuevo Cliente</h3>
+                <form id="clientForm" class="form" novalidate>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="clientName">Nombre</label>
-                            <input id="clientName" type="text" required />
+                            <label for="clientName">Nombre completo <span class="campo-requerido">*</span></label>
+                            <input
+                                id="clientName"
+                                type="text"
+                                name="nombre"
+                                required
+                                minlength="2"
+                                maxlength="100"
+                                placeholder="Ej: Juan Pérez"
+                                autocomplete="name"
+                            />
+                            <span class="mensaje-error">El nombre debe tener entre 2 y 100 caracteres</span>
                         </div>
                         <div class="form-group">
-                            <label for="clientPhone">Teléfono</label>
-                            <input id="clientPhone" type="tel" required />
+                            <label for="clientPhone">Teléfono <span class="campo-requerido">*</span></label>
+                            <input
+                                id="clientPhone"
+                                type="tel"
+                                name="telefono"
+                                required
+                                pattern="[\d\s\-\+\(\)]{7,15}"
+                                placeholder="Ej: +573001234567"
+                                autocomplete="tel"
+                            />
+                            <span class="mensaje-error">Ingrese un teléfono válido (mínimo 7 dígitos)</span>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="clientEmail">Email</label>
-                            <input id="clientEmail" type="email" required />
+                            <label for="clientEmail">Correo electrónico <span class="campo-requerido">*</span></label>
+                            <input
+                                id="clientEmail"
+                                type="email"
+                                name="email"
+                                required
+                                placeholder="Ej: cliente@email.com"
+                                autocomplete="email"
+                            />
+                            <span class="mensaje-error">Ingrese un correo electrónico válido</span>
                         </div>
                         <div class="form-group">
-                            <label for="clientAddress">Dirección</label>
-                            <input id="clientAddress" type="text" />
+                            <label for="clientAddress">Dirección <span class="campo-opcional">(opcional)</span></label>
+                            <input
+                                id="clientAddress"
+                                type="text"
+                                name="direccion"
+                                maxlength="200"
+                                placeholder="Ej: Calle 123 #45-67"
+                                autocomplete="street-address"
+                            />
+                            <span class="mensaje-error">La dirección no puede superar los 200 caracteres</span>
                         </div>
                     </div>
                     <div class="form-row">
@@ -152,11 +275,12 @@
                         <button type="button" id="newClientBtn" class="btn btn-secondary">Nuevo Cliente</button>
                     </div>
                 </form>
-                <div class="search-section">
-                    <input id="clientSearchId" class="search-input" type="text" placeholder="Buscar cliente por ID" />
+
+                <div class="search-section" style="margin-top: 1.5rem;">
+                    <input id="clientSearchId" class="search-input" type="text" placeholder="Buscar cliente por ID..." pattern="[0-9]+" />
                     <button id="searchClientBtn" class="btn">Buscar</button>
                 </div>
-                <div id="clientSearchResult" style="display:none;"> 
+                <div id="clientSearchResult" style="display:none;">
                     <h4>Cliente encontrado</h4>
                     <div id="clientInfo"></div>
                 </div>
@@ -168,6 +292,7 @@
         </section>
     </main>
 
+    <script src="api.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

@@ -757,3 +757,65 @@ main {
     font-size: 0.85rem;
     margin-top: var(--spacing-xs);
 }
+
+/* ==================== Validación HTML5 — Punto 17 ==================== */
+
+.campo-requerido {
+    color: var(--color-error);
+    font-weight: 700;
+}
+
+.campo-opcional {
+    color: #7f8c8d;
+    font-size: 0.82rem;
+    font-weight: 400;
+}
+
+/* Mensaje de error: visible por defecto, se oculta cuando el campo es válido */
+.mensaje-error {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--color-error);
+    margin-top: 0.2rem;
+}
+
+.form-group input:valid + .mensaje-error,
+.form-group select:valid + .mensaje-error,
+.form-group textarea:valid + .mensaje-error {
+    display: none;
+}
+
+/* Borde verde cuando el campo está correctamente completado */
+.form-group input:valid,
+.form-group select:valid,
+.form-group textarea:valid {
+    border-color: var(--color-success);
+}
+
+/* Borde rojo cuando el campo es inválido */
+.form-group input:invalid,
+.form-group select:invalid,
+.form-group textarea:invalid {
+    border-color: var(--color-error);
+    background-color: #fff8f8;
+}
+
+/* Al enfocar un campo inválido: anillo rojo */
+.form-group input:focus:invalid,
+.form-group select:focus:invalid,
+.form-group textarea:focus:invalid {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.18);
+}
+
+/* Campos opcionales sin valor no muestran estado de error */
+.form-group input:not([required]):placeholder-shown,
+.form-group textarea:not([required]):placeholder-shown {
+    border-color: var(--color-border);
+    background-color: #fff;
+}
+
+.form-group input:not([required]):placeholder-shown + .mensaje-error,
+.form-group textarea:not([required]):placeholder-shown + .mensaje-error {
+    display: none;
+}
