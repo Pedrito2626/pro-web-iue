@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Productos — SalesFlow</title>
+  <link rel="stylesheet" href="public/css/styles.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="brand"><span class="brand__mark"></span>Sales<em>Flow</em></a>
+    <ul class="nav__links">
+      <li><a href="index.html"     class="nav__link">Inicio</a></li>
+      <li><a href="clientes.html"  class="nav__link">Clientes</a></li>
+      <li><a href="ventas.html"    class="nav__link">Nueva venta</a></li>
+      <li><a href="productos.html" class="nav__link nav__link--active">Productos</a></li>
+    </ul>
+    <span class="nav__cta" aria-label="Estado del sistema"><span class="dot"></span> En línea</span>
+    <button class="nav__toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main>
+
+    <header class="page-head">
+      <div>
+        <p class="page-head__crumb"><a href="index.html">Inicio</a> · Productos</p>
+        <h1 class="page-head__title">El <em>catálogo</em> de la casa</h1>
+        <p class="page-head__sub" id="mode-desc">Botellas seleccionadas, disponibles en inventario.</p>
+      </div>
+      <div class="page-head__actions">
+        <div class="mode-toggle" role="group" aria-label="Modo de vista">
+          <button id="btn-catalogo" class="mode-btn mode-btn--active" onclick="setMode('catalogo')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Catálogo
+          </button>
+          <button id="btn-gestionar" class="mode-btn" onclick="setMode('gestionar')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            Gestionar
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="page-head__rule"></div>
+
+    <!-- Filtros (ambos modos) -->
+    <section class="filter-bar" aria-label="Filtros">
+      <div class="filter-bar__search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="search-input" placeholder="Buscar por nombre o categoría…" aria-label="Buscar producto" />
+      </div>
+      <select id="cat-filter" aria-label="Filtrar por categoría">
+        <option value="">Todas las categorías</option>
+        <option value="aguardiente">Aguardiente</option>
+        <option value="cerveza">Cerveza</option>
+        <option value="vino">Vino</option>
+        <option value="ron">Ron</option>
+        <option value="whisky">Whisky</option>
+        <option value="otros">Otros</option>
+      </select>
+      <span class="filter-bar__count" id="result-count">— ítems</span>
+    </section>
+
+    <!-- MODO CATÁLOGO -->
+    <section id="modo-catalogo" aria-label="Catálogo de productos">
+      <div class="product-grid">
+        <!-- Skeletons iniciales -->
+        <div class="skeleton skeleton--card"></div>
+        <div class="skeleton skeleton--card"></div>
+        <div class="skeleton skeleton--card"></div>
+        <div class="skeleton skeleton--card"></div>
+      </div>
+    </section>
+
+    <!-- MODO GESTIONAR -->
+    <section id="modo-gestionar" aria-label="Gestión de inventario" hidden>
+      <div class="inv-actions">
+        <button type="button" class="btn btn--primary btn--sm" onclick="openProductoModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nuevo producto
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <div class="table-wrap__inner">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Estado</th>
+                <th scope="col" style="text-align:right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="6" style="text-align:center;color:var(--text-dim);padding:2rem">Cargando inventario…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal producto -->
+  <dialog class="modal" id="modal-producto" aria-labelledby="modal-producto-title">
+    <div class="modal__panel">
+      <header class="modal__head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <h2 id="modal-producto-title">Agregar producto</h2>
+        <button class="modal__close" type="button" onclick="closeProductoModal()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </header>
+
+      <form id="producto-form" novalidate>
+        <div class="modal__body">
+          <div class="fields-row">
+            <div class="field">
+              <label for="p-nombre">Nombre <span class="req">*</span></label>
+              <input type="text" id="p-nombre" name="nombre" placeholder="Aguardiente Antioqueño 750ml" required minlength="3" />
+              <span class="field__error" role="alert">Mínimo 3 caracteres.</span>
+            </div>
+            <div class="field">
+              <label for="p-cat">Categoría <span class="req">*</span></label>
+              <select id="p-cat" name="categoria" required>
+                <option value="">Selecciona…</option>
+                <option value="aguardiente">Aguardiente</option>
+                <option value="cerveza">Cerveza</option>
+                <option value="vino">Vino</option>
+                <option value="ron">Ron</option>
+                <option value="whisky">Whisky</option>
+                <option value="otros">Otros</option>
+              </select>
+            </div>
+          </div>
+          <div class="fields-row">
+            <div class="field">
+              <label for="p-precio">Precio (COP) <span class="req">*</span></label>
+              <input type="number" id="p-precio" name="precio" placeholder="28000" required min="1" step="100" />
+              <span class="field__error" role="alert">El precio debe ser mayor a $0.</span>
+            </div>
+            <div class="field">
+              <label for="p-stock">Stock inicial <span class="req">*</span></label>
+              <input type="number" id="p-stock" name="stock" placeholder="20" required min="0" />
+              <span class="field__error" role="alert">El stock no puede ser negativo.</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="p-desc">Descripción <span class="opt">opcional</span></label>
+            <textarea id="p-desc" name="descripcion" placeholder="Descripción breve del producto…" maxlength="500"></textarea>
+            <span class="field__hint">Máximo 500 caracteres.</span>
+          </div>
+        </div>
+        <footer class="modal__foot">
+          <button type="button" class="btn btn--ghost" onclick="closeProductoModal()">Cancelar</button>
+          <button type="submit" class="btn btn--primary" id="modal-save-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Guardar producto
+          </button>
+        </footer>
+      </form>
+    </div>
+  </dialog>
+
+  <script src="public/js/app.js"></script>
+</body>
+</html>

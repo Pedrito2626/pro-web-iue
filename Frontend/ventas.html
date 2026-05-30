@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nueva venta — SalesFlow</title>
+  <link rel="stylesheet" href="public/css/styles.css" />
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="brand"><span class="brand__mark"></span>Sales<em>Flow</em></a>
+    <ul class="nav__links">
+      <li><a href="index.html"     class="nav__link">Inicio</a></li>
+      <li><a href="clientes.html"  class="nav__link">Clientes</a></li>
+      <li><a href="ventas.html"    class="nav__link nav__link--active">Nueva venta</a></li>
+      <li><a href="productos.html" class="nav__link">Productos</a></li>
+    </ul>
+    <span class="nav__cta" aria-label="Estado del sistema"><span class="dot"></span> En línea</span>
+    <button class="nav__toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main>
+
+    <header class="page-head">
+      <div>
+        <p class="page-head__crumb"><a href="index.html">Inicio</a> · Nueva venta</p>
+        <h1 class="page-head__title">Componer una <em>venta</em></h1>
+        <p class="page-head__sub">Asocia un cliente, añade los productos y registra la transacción.</p>
+      </div>
+    </header>
+    <div class="page-head__rule"></div>
+
+    <div class="form-layout">
+
+      <!-- Formulario -->
+      <form id="venta-form" novalidate>
+
+        <!-- Cliente -->
+        <section class="card" style="margin-bottom:1.25rem">
+          <header class="card__head">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <h2>Cliente asociado</h2>
+            <span class="badge badge--neutral" id="cliente-status">Sin asociar</span>
+          </header>
+          <div class="card__body">
+            <div class="fields-row" style="grid-template-columns: 1fr auto">
+              <div class="field">
+                <label for="cliente-id">
+                  ID del cliente
+                  <span class="opt">opcional</span>
+                </label>
+                <input
+                  type="text"
+                  id="cliente-id"
+                  name="cliente_id"
+                  placeholder="Ej: 1"
+                  pattern="[0-9]+"
+                  inputmode="numeric"
+                  autocomplete="off"
+                />
+                <span class="field__hint">Si el cliente no está registrado, deja vacío.</span>
+              </div>
+              <div class="field" style="justify-content:flex-end">
+                <label>&nbsp;</label>
+                <button type="button" id="verify-cliente-btn" class="btn btn--ghost">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  Verificar
+                </button>
+              </div>
+            </div>
+            <div id="cliente-verif"></div>
+          </div>
+        </section>
+
+        <!-- Productos -->
+        <section class="card" style="margin-bottom:1.25rem">
+          <header class="card__head">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8M9 2v3a4 4 0 0 1-.7 2.2L7.6 8.3A4 4 0 0 0 7 10.5V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.5a4 4 0 0 0-.6-2.2l-.7-1.1A4 4 0 0 1 15 5V2"/></svg>
+            <h2>Añadir productos</h2>
+          </header>
+          <div class="card__body">
+
+            <div class="field">
+              <label for="producto-select">Producto <span class="req">*</span></label>
+              <select id="producto-select" name="producto">
+                <option value="">Selecciona un producto…</option>
+              </select>
+            </div>
+
+            <div class="fields-row" style="grid-template-columns: 160px 1fr">
+              <div class="field">
+                <label for="cantidad">Cantidad <span class="req">*</span></label>
+                <input
+                  type="number"
+                  id="cantidad"
+                  name="cantidad"
+                  value="1"
+                  min="1"
+                  max="999"
+                  required
+                />
+                <span class="field__error" role="alert">La cantidad debe ser mayor a 0.</span>
+              </div>
+              <div class="field" style="justify-content:flex-end">
+                <label>&nbsp;</label>
+                <button type="button" id="add-product-btn" class="btn btn--ghost btn--block">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Añadir al resumen
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Notas -->
+        <section class="card">
+          <header class="card__head">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <h2>Observaciones</h2>
+            <span class="badge badge--neutral">Opcional</span>
+          </header>
+          <div class="card__body">
+            <div class="field">
+              <label for="notas">Notas adicionales</label>
+              <textarea
+                id="notas"
+                name="notas"
+                placeholder="Ej: pagó en efectivo, dejó propina…"
+                maxlength="500"
+              ></textarea>
+              <span class="field__hint">Máximo 500 caracteres.</span>
+            </div>
+          </div>
+        </section>
+
+      </form>
+
+      <!-- Resumen (carrito) -->
+      <aside class="summary" aria-label="Resumen de la venta">
+        <header class="summary__head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="var(--absinthe)"/><line x1="3" y1="6" x2="21" y2="6" stroke="var(--absinthe)"/><path d="M16 10a4 4 0 0 1-8 0" stroke="var(--absinthe)"/></svg>
+          <h2>Resumen</h2>
+          <span class="count" id="cart-count">0 ítems</span>
+        </header>
+
+        <div class="summary__items" id="cart-items">
+          <div class="summary__empty">
+            <div class="summary__empty-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8M9 2v3a4 4 0 0 1-.7 2.2L7.6 8.3A4 4 0 0 0 7 10.5V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.5a4 4 0 0 0-.6-2.2l-.7-1.1A4 4 0 0 1 15 5V2"/></svg>
+            </div>
+            <p>Sin productos aún</p>
+            <small>Añade botellas para componer la venta.</small>
+          </div>
+        </div>
+
+        <div class="summary__totals">
+          <div class="summary__line"><span>Ítems</span> <span id="cart-itemcount" class="mono">0</span></div>
+          <div class="summary__line summary__line--total">
+            <span>Total</span> <strong id="cart-total">$0</strong>
+          </div>
+        </div>
+
+        <div class="summary__action">
+          <button type="submit" form="venta-form" class="btn btn--primary" id="confirm-btn" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Registrar venta
+          </button>
+        </div>
+      </aside>
+
+    </div>
+
+  </main> 
+
+  <script src="public/js/app.js"></script>
+</body>
+</html>
